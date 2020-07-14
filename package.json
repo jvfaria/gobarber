@@ -6,7 +6,9 @@
   "author": "JVitor22 <jvfaria015@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "^8.3.0",
+    "typeorm": "^0.2.25"
   },
   "scripts": {
     "serve": "ts-node-dev --no-notify --ignore-watch node_modules --transpile-only src/server.ts"
