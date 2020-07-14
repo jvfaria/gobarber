@@ -1,0 +1,22 @@
+{
+  "name": "gobarber",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jvfaria/gobarber.git",
+  "author": "JVitor22 <jvfaria015@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "serve": "ts-node-dev --no-notify --ignore-watch node_modules --transpile-only src/server.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6",
+    "date-fns": "^2.14.0",
+    "ts-node-dev": "^1.0.0-pre.50",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.9.6",
+    "uuidv4": "^6.1.1"
+  }
+}
