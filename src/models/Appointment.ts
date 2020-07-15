@@ -1,11 +1,11 @@
 import { uuid } from 'uuidv4';
 
 export default class Appointment {
-  id: string
+  id: string;
 
-  provider: string
+  provider: string;
 
-  date: Date
+  date: Date;
 
   constructor({ provider, date }: Omit<Appointment, 'id'>) {
     this.id = uuid();

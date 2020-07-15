@@ -3,8 +3,8 @@ import AppointmentRepository from '../repositories/AppointmentsRepository';
 import Appointment from '../models/Appointment';
 
 interface AppointmentRequest {
-  provider: string,
-  date: Date,
+  provider: string;
+  date: Date;
 }
 
 export default class CreateAppointment {
