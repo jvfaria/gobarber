@@ -9,11 +9,6 @@ class AppointmentRepository extends Repository<Appointment> {
     });
     return find || undefined;
   }
-
-  public async all(): Promise<Appointment | null> {
-    const appointments = await this.all();
-    return appointments || null;
-  }
 }
 
 export default AppointmentRepository;
