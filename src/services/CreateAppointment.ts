@@ -1,6 +1,5 @@
 import { startOfHour } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
-import { uuid } from 'uuidv4';
 import AppointmentRepository from '../repositories/AppointmentsRepository';
 import Appointment from '../models/Appointment';
 
@@ -23,8 +22,7 @@ export default class CreateAppointment {
       throw Error('Could not create appointment in same date');
     } else {
       const appointment = appointments.create({
-        id: uuid(),
-        provider,
+        provider_id: provider,
         date: parsedDate,
       });
 
