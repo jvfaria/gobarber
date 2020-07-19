@@ -4,13 +4,13 @@ import AppointmentRepository from '../repositories/AppointmentsRepository';
 import Appointment from '../models/Appointment';
 
 interface AppointmentRequest {
-  provider: string;
+  provider_id: string;
   date: Date;
 }
 
 export default class CreateAppointment {
   public async execute({
-    provider,
+    provider_id,
     date,
   }: AppointmentRequest): Promise<Appointment> {
     const appointments = getCustomRepository(AppointmentRepository);
@@ -19,10 +19,10 @@ export default class CreateAppointment {
     const verify = await appointments.verifyAppointment(parsedDate);
 
     if (verify) {
-      throw Error('Could not create appointment in same date');
+      throw new Error('Could not create appointment in same date');
     } else {
       const appointment = appointments.create({
-        provider_id: provider,
+        provider_id,
         date: parsedDate,
       });
 
