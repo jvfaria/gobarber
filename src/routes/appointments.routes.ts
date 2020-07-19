@@ -3,8 +3,11 @@ import { parseISO } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
 import CreateAppointment from '../services/CreateAppointment';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import verifyAuth from '../middlewares/verifyAuth';
 
 const appointmentsRouter = Router();
+
+appointmentsRouter.use(verifyAuth);
 
 appointmentsRouter.get('/', async (request, response) => {
   try {
@@ -13,7 +16,7 @@ appointmentsRouter.get('/', async (request, response) => {
 
     return response.status(200).json(appointments);
   } catch (error) {
-    return response.status(400).json(`${error.message}`);
+    return response.status(400).json({ message: error.message });
   }
 });
 
