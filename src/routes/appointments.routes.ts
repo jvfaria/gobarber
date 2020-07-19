@@ -9,29 +9,23 @@ const appointmentsRouter = Router();
 appointmentsRouter.get('/', async (request, response) => {
   try {
     const appointmentsRepository = getCustomRepository(AppointmentsRepository);
-    const foundedAppointments = await appointmentsRepository.find();
-    const appointmentsOrNot =
-      foundedAppointments.length < 1
-        ? { message: 'You have any appointments booked' }
-        : foundedAppointments;
+    const appointments = await appointmentsRepository.find();
 
-    return response.status(200).json(appointmentsOrNot);
+    return response.status(200).json(appointments);
   } catch (error) {
-    return response
-      .status(400)
-      .json(`${error.message} you have no appointments`);
+    return response.status(400).json(`${error.message}`);
   }
 });
 
 appointmentsRouter.post('/', async (request, response) => {
   try {
-    const { provider, date } = request.body;
+    const { provider_id, date } = request.body;
     const parsedDate = parseISO(date);
 
     const appointmentService = new CreateAppointment();
 
     const appointment = await appointmentService.execute({
-      provider,
+      provider_id,
       date: parsedDate,
     });
 
