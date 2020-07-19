@@ -1,6 +1,8 @@
 import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 import User from '../models/User';
+import authConfig from '../config/authconfig';
 
 interface AuthRequest {
   email: string;
@@ -11,7 +13,7 @@ class AuthUserService {
   public async execute({
     email,
     password,
-  }: AuthRequest): Promise<{ user: User }> {
+  }: AuthRequest): Promise<{ user: User; token: string }> {
     const usersRepository = getRepository(User);
 
     const user = await usersRepository.findOne({ where: { email } });
@@ -26,7 +28,14 @@ class AuthUserService {
       throw new Error('invalid password');
     }
 
-    return { user };
+    const { secret, expiresIn } = authConfig.jwt;
+
+    const token = sign({}, secret, {
+      subject: user.id,
+      expiresIn,
+    });
+
+    return { user, token };
   }
 }
 
