@@ -1,3 +1,9 @@
 node_modules
 yarn-error.log
 launch.json
+temp/
+.vscode/
+.idea/
+
+tmp/*
+!tmp/.gitkeep
