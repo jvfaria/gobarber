@@ -16,7 +16,7 @@ export default function verifyAuth(
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    return response.status(500).json({ message: 'jwt token is missing' });
+    throw new Error('jwt token is missing');
   }
 
   const [, token] = authHeader.split(' ');
@@ -26,8 +26,10 @@ export default function verifyAuth(
 
     const { sub } = decodedToken as TokenPayload;
     request.body.user = { id: sub };
-  } catch (error) {
-    return response.status(500).json({ message: error.message });
+    response.locals.userId = sub;
+
+    return next();
+  } catch {
+    throw new Error('Invalid JWT token');
   }
-  return next();
 }
