@@ -21,7 +21,12 @@
   "rules": {
     "camelcase": "off",
     "class-methods-use-this":"off",
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",
