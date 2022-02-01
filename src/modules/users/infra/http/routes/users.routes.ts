@@ -1,15 +1,29 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
 import multer from 'multer';
-import CreateUserService from '../modules/users/services/CreateUserService';
-import UpdateUserAvatarService from '../modules/users/services/UpdateUserAvatarService';
-import verifyAuth from '../middlewares/verifyAuth';
-import uploadConfig from '../config/upload';
-
-import User from '../models/User';
+import User from '@modules/users/infra/typeorm/entities/User';
+import CreateUserService from '@modules/users/services/CreateUserService';
+import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
+import verifyAuth from '@shared/infra/http/middlewares/verifyAuth';
+import uploadConfig from '@config/upload';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
+
+interface Thing {
+  prop: string;
+}
+
+interface ProportionalThing {
+  prop?: string;
+}
+
+function deleteProp(prop: Thing) {
+  const temp: ProportionalThing = prop;
+
+  delete temp.prop;
+  return temp;
+}
 
 usersRouter.get('/', async (request, response) => {
   try {
@@ -18,7 +32,7 @@ usersRouter.get('/', async (request, response) => {
 
     return response.status(200).json(users);
   } catch (error) {
-    return response.json({ message: error.message });
+    return response.json({ message: error });
   }
 });
 
@@ -28,10 +42,12 @@ usersRouter.post('/', async (request, response) => {
     const userService = new CreateUserService();
     const user = await userService.execute({ name, email, password });
 
-    delete user.password;
+    const passwdToRemove: Thing = { prop: user.password };
+
+    deleteProp(passwdToRemove);
     return response.status(200).json(user);
   } catch (error) {
-    return response.status(400).json({ message: error.message });
+    return response.status(400).json({ message: error });
   }
 });
 
@@ -47,10 +63,12 @@ usersRouter.patch(
         avatarFilename: request.file?.filename,
       });
 
-      delete user.password;
+      const passwdToRemove: Thing = { prop: user.password };
+
+      deleteProp(passwdToRemove);
       return response.json(user);
     } catch (error) {
-      return response.status(400).json({ message: error.message });
+      return response.status(400).json({ message: error });
     }
   },
 );
