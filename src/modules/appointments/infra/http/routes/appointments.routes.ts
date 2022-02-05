@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { parseISO } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
-import CreateAppointment from '../modules/appointments/services/CreateAppointment';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
-import verifyAuth from '../middlewares/verifyAuth';
+import CreateAppointment from '@modules/appointments/services/CreateAppointment';
+import AppointmentsRepository from '@modules/appointments/repositories/AppointmentsRepository';
+import verifyAuth from '@shared/infra/http/middlewares/verifyAuth';
 
 const appointmentsRouter = Router();
 
@@ -16,7 +16,7 @@ appointmentsRouter.get('/', async (request, response) => {
 
     return response.status(200).json(appointments);
   } catch (error) {
-    return response.status(400).json({ message: error.message });
+    return response.status(400).json({ message: error });
   }
 });
 
@@ -34,7 +34,7 @@ appointmentsRouter.post('/', async (request, response) => {
 
     return response.status(201).json(appointment);
   } catch (error) {
-    return response.status(400).json({ message: error.message });
+    return response.status(400).json({ message: error });
   }
 });
 

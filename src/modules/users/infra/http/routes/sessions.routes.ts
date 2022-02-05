@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import AuthUserService from '../modules/users/services/AuthUserService';
+import AuthUserService from '@modules/users/services/AuthUserService';
 
 const sessionsRouter = Router();
 
@@ -11,7 +11,7 @@ sessionsRouter.post('/', async (request, response) => {
 
     return response.status(200).json({ user, token });
   } catch (error) {
-    return response.status(400).json({ message: error.message });
+    return response.status(400).json({ message: error });
   }
 });
 
