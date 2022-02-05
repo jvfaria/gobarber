@@ -18,7 +18,7 @@
     "uuidv4": "^6.1.1"
   },
   "scripts": {
-    "serve": "ts-node-dev --inspect --no-notify --ignore-watch node_modules --transpile-only src/server.ts",
+    "serve": "ts-node-dev --inspect --no-notify --ignore-watch node_modules --transpile-only -r tsconfig-paths/register src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev --no-notify ./node_modules/typeorm/cli.js "
   },
   "devDependencies": {
@@ -38,6 +38,7 @@
     "prettier": "^2.0.5",
     "ts-node-dev": "^1.0.0-pre.50",
     "tsc": "^1.20150623.0",
+    "tsconfig-paths": "^3.12.0",
     "typescript": "^3.9.6"
   }
 }
