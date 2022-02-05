@@ -4,12 +4,12 @@ import fs from 'fs';
 import UploadConfig from '@config/upload';
 import User from '@modules/users/infra/typeorm/entities/User';
 
-interface Request {
+interface IRequest {
   user_id: string;
   avatarFilename: string | undefined;
 }
 class UpdateUserAvatarService {
-  public async execute({ user_id, avatarFilename }: Request): Promise<User> {
+  public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
     const usersRepository = getRepository(User);
     console.log('user:', user_id);
     const user = await usersRepository.findOne(user_id);

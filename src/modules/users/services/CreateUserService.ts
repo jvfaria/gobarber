@@ -2,7 +2,7 @@ import { Entity, getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import User from '../infra/typeorm/entities/User';
 
-interface UserRequest {
+interface IUserRequest {
   name: string;
   email: string;
   password: string;
@@ -10,7 +10,7 @@ interface UserRequest {
 
 @Entity('users')
 export default class CreateUserService {
-  public async execute({ name, email, password }: UserRequest): Promise<User> {
+  public async execute({ name, email, password }: IUserRequest): Promise<User> {
     const usersRepository = getRepository(User);
 
     const userExists = await usersRepository.findOne('users', {

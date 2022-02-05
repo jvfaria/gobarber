@@ -10,16 +10,16 @@ import uploadConfig from '@config/upload';
 const usersRouter = Router();
 const upload = multer(uploadConfig);
 
-interface Thing {
+interface IThing {
   prop: string;
 }
 
-interface ProportionalThing {
+interface IProportionalThing {
   prop?: string;
 }
 
-function deleteProp(prop: Thing) {
-  const temp: ProportionalThing = prop;
+function deleteProp(prop: IThing) {
+  const temp: IProportionalThing = prop;
 
   delete temp.prop;
   return temp;
@@ -42,7 +42,7 @@ usersRouter.post('/', async (request, response) => {
     const userService = new CreateUserService();
     const user = await userService.execute({ name, email, password });
 
-    const passwdToRemove: Thing = { prop: user.password };
+    const passwdToRemove: IThing = { prop: user.password };
 
     deleteProp(passwdToRemove);
     return response.status(200).json(user);
@@ -63,7 +63,7 @@ usersRouter.patch(
         avatarFilename: request.file?.filename,
       });
 
-      const passwdToRemove: Thing = { prop: user.password };
+      const passwdToRemove: IThing = { prop: user.password };
 
       deleteProp(passwdToRemove);
       return response.json(user);

@@ -1,10 +1,11 @@
 import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+import AppError from '@shared/errors/AppError';
 import User from '../infra/typeorm/entities/User';
 import authConfig from '../../../config/authconfig';
 
-interface AuthRequest {
+interface IAuthRequest {
   email: string;
   password: string;
 }
@@ -13,19 +14,19 @@ class AuthUserService {
   public async execute({
     email,
     password,
-  }: AuthRequest): Promise<{ user: User; token: string }> {
+  }: IAuthRequest): Promise<{ user: User; token: string }> {
     const usersRepository = getRepository(User);
 
     const user = await usersRepository.findOne({ where: { email } });
 
     if (!user) {
-      throw new Error('invalid email');
+      throw new AppError('invalid email');
     }
 
     const checkPassword = await compare(password, user.password);
 
     if (!checkPassword) {
-      throw new Error('invalid password');
+      throw new AppError('invalid password');
     }
 
     const { secret, expiresIn } = authConfig.jwt;
